@@ -1,10 +1,11 @@
 import express from "express";
 import { getUsers, createUser } from "../controllers/userController";
 import { body } from "express-validator";
+import { protect, authorize } from '../middlewares/authMiddleware';
 
 const router = express.Router();
 
-router.get("/", getUsers);
+router.get("/", protect, authorize(['admin']), getUsers);
 router.post(
   "/",
   [
